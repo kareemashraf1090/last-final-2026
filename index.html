@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المحاسب الأسطوري | بوابة التخرج</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -10,299 +10,294 @@
     <style>
         :root {
             --navy: #002d5b; --gold: #c5a059; --bg: #f4f7fa; --card-bg: #ffffff;
-            --text: #002d5b; --border: #e0e0e0; --success: #27ae60;
-            --timer-bg: linear-gradient(135deg, #ff4757, #ff6b81);
+            --text: #002d5b; --border: #e0e0e0; --success: #27ae60; --danger: #e74c3c;
+            --visa-gradient: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
         }
         [data-theme="dark"] {
             --navy: #f1c40f; --gold: #ffcc00; --bg: #0d1117; --card-bg: #161b22;
             --text: #c9d1d9; --border: #30363d;
-            --timer-bg: linear-gradient(135deg, #e67e22, #f39c12);
         }
 
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; transition: 0.4s; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; transition: 0.4s; width: 100%; }
 
-        /* --- واجهة الكريديت كارد --- */
-        #welcome-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--navy); z-index: 9999; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;
+        /* --- أنيميشن الأيقونات الطائرة الكثيفة جداً --- */
+        .bg-icon { position: fixed; z-index: -1; opacity: 0.15; animation: float-rotate infinite linear; color: var(--gold); pointer-events: none; }
+        
+        @keyframes float-rotate {
+            0% {transform: translate(0,0) rotate(0deg);}
+            25% {transform: translate(40px, -40px) rotate(90deg);}
+            50% {transform: translate(-30px, 30px) rotate(180deg);}
+            75% {transform: translate(40px, 40px) rotate(270deg);}
+            100% {transform: translate(0,0) rotate(360deg);}
         }
-        .visa-card {
-            width: 350px; height: 200px; background: linear-gradient(135deg, #001f3f 0%, #004080 100%);
-            border-radius: 15px; padding: 20px; color: white; position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5); border: 1px solid rgba(255,215,0,0.3);
-            margin-bottom: 30px; animation: card-appear 0.8s ease;
+
+        /* --- تصميم الفيزا كارد --- */
+        #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--navy); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
+        
+        .real-visa {
+            width: 100%; max-width: 350px; height: 210px; background: var(--visa-gradient); border-radius: 15px; padding: 20px; color: white; position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; box-sizing: border-box;
+            animation: cardAppear 1s ease-out;
         }
-        @keyframes card-appear { from {opacity: 0; transform: scale(0.8);} to {opacity: 1; transform: scale(1);} }
-
-        .visa-card i.chip { color: #ffd700; font-size: 2.5rem; margin-bottom: 20px; display: block; }
-        .card-number { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 15px; height: 25px; }
-        .card-holder { font-size: 0.9rem; text-transform: uppercase; }
-        .visa-logo { position: absolute; bottom: 20px; right: 20px; font-style: italic; font-weight: bold; font-size: 1.2rem; }
-
-        .onboarding-form { max-width: 400px; width: 100%; display: grid; gap: 10px; }
-        .onboarding-form input { padding: 12px; border-radius: 8px; border: none; font-family: 'Cairo'; }
-        .btn-start { background: var(--gold); color: #000; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); }
-
-        /* --- الأيقونات الخلفية الكثيفة جداً --- */
-        .bg-icon { position: fixed; z-index: -1; opacity: 0.15; animation: move-floating-rotate 10s infinite linear; color: var(--gold); font-size: 6rem; }
-
-        @keyframes move-floating-rotate {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(30px, -30px) rotate(90deg); }
-            50% { transform: translate(-20px, 20px) rotate(180deg); }
-            75% { transform: translate(30px, 30px) rotate(270deg); }
-        }
+        @keyframes cardAppear { from {opacity: 0; transform: scale(0.8) translateY(20px);} to {opacity: 1; transform: scale(1) translateY(0);} }
+        
+        .visa-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .chip { width: 45px; height: 35px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 6px; }
+        .visa-logo { font-style: italic; font-weight: 900; font-size: 1.4rem; opacity: 0.9; }
+        
+        .card-number-display { font-size: 1.2rem; letter-spacing: 2px; font-family: monospace; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); text-align: center; }
+        .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .label { font-size: 0.55rem; text-transform: uppercase; opacity: 0.7; display: block; }
+        .value { font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; display: block; }
 
         /* --- التنقل --- */
-        nav { background: var(--card-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .user-pill { background: var(--navy); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
-        .user-pill:hover { background: var(--gold); color: #000; }
-        .nav-links { display: flex; gap: 8px; align-items: center; }
-        nav button { background: none; border: 2px solid var(--gold); color: var(--text); padding: 8px 12px; border-radius: 50px; cursor: pointer; font-weight: 800; font-size: 0.8rem; transition: 0.3s; }
+        nav { background: var(--card-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); }
+        .nav-links { display: flex; gap: 5px; align-items: center; }
+        nav button { background: none; border: 2.2px solid var(--gold); color: var(--text); padding: 6px 10px; border-radius: 50px; cursor: pointer; font-weight: 800; font-size: 0.75rem; transition: 0.3s; }
         nav button.active { background: var(--gold); color: #000; transform: scale(1.05); }
 
-        /* --- الجدول وستايل العداد المميز --- */
-        .page { display: none; padding: 30px 15px; animation: fadeIn 0.5s ease-out; }
+        /* --- الحاويات --- */
+        .page { display: none; padding: 20px 10px; max-width: 900px; margin: auto; animation: fadeIn 0.4s; box-sizing: border-box; }
         .page.active { display: block; }
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 
-        .table-container { max-width: 900px; margin: auto; background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid var(--border); }
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th { background: rgba(0,0,0,0.05); color: var(--gold); padding: 20px; width: 33.3%; border-bottom: 2px solid var(--gold); }
-        td { padding: 15px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .table-container { background: var(--card-bg); border-radius: 15px; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; min-width: 550px; }
+        th { background: rgba(197, 160, 89, 0.1); color: var(--gold); padding: 15px; font-size: 0.85rem; border-bottom: 2px solid var(--gold); }
+        td { padding: 12px; text-align: center; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
 
-        .timer-box {
-            background: var(--timer-bg);
-            color: white;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            padding: 10px 15px;
-            border-radius: 12px;
-            display: inline-block;
-            font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            animation: pulse-glow 1.5s infinite ease-in-out;
-            min-width: 140px;
+        .timer-box { background: linear-gradient(135deg, #ff4757, #ff6b81); color: white; padding: 6px 10px; border-radius: 8px; font-weight: 900; min-width: 110px; display: inline-block; font-size: 0.8rem; animation: pulseGlow 1.5s infinite ease-in-out; }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 71, 87, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 71, 87, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 71, 87, 0.5); }
         }
 
-        @keyframes pulse-glow {
-            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4); }
+        .settings-box { background: var(--card-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--border); max-width: 350px; margin: auto; }
+        input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: 'Cairo'; box-sizing: border-box; font-size: 16px; }
+        .btn-save { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(197, 160, 89, 0.4); }
+
+        @media (max-width: 400px) {
+            .real-visa { height: 180px; padding: 15px; }
+            .card-number-display { font-size: 1rem; margin-bottom: 10px; }
+            .visa-header { margin-bottom: 15px; }
         }
-
-        /* --- منطقة المذاكرة --- */
-        .note-card { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 25px; border-right: 8px solid var(--gold); box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
-        .note-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .study-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        @media (max-width: 700px) { .study-grid { grid-template-columns: 1fr; } }
-
-        .box { background: var(--bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
-        .box h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: var(--gold); border-bottom: 1px solid var(--border); }
-        
-        .todo-item { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 7px 0; border-bottom: 1px dashed #ccc; cursor: pointer; transition: 0.2s; }
-        .todo-item:hover { background: rgba(0,0,0,0.03); }
-        .completed { text-decoration: line-through; opacity: 0.5; }
-
-        .btn-action { background: var(--gold); border: none; padding: 8px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px; transition: 0.2s; }
-        .btn-action:hover { background: var(--navy); color: white; }
-        .drive-btn { background: var(--success); color: white; text-align: center; display: block; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 10px; font-size: 0.85rem; transition: 0.3s; }
-        .drive-btn:hover { background: #1e8449; transform: translateY(-2px); }
-
-        header { text-align: center; margin-bottom: 30px; }
-        header h1 { font-size: 2.5rem; color: var(--gold); margin: 0; font-weight: 900; }
     </style>
 </head>
 <body data-theme="light">
 
-<i class="fas fa-calculator bg-icon" style="top:5%; left:3%; animation-duration: 7s;"></i>
-<i class="fas fa-coins bg-icon" style="top:25%; right:4%; animation-duration: 9s;"></i>
-<i class="fas fa-landmark bg-icon" style="bottom:10%; left:6%; animation-duration: 8s;"></i>
-<i class="fas fa-chart-line bg-icon" style="top:50%; right:8%; animation-duration: 11s;"></i>
-<i class="fas fa-piggy-bank bg-icon" style="bottom:30%; right:12%; animation-duration: 7s;"></i>
-<i class="fas fa-wallet bg-icon" style="top:60%; left:2%; animation-duration: 10s;"></i>
-<i class="fas fa-file-invoice-dollar bg-icon" style="top:40%; right:15%; animation-duration: 12s;"></i>
-<i class="fas fa-search-dollar bg-icon" style="bottom:50%; left:8%; animation-duration: 8s;"></i>
-<i class="fas fa-briefcase bg-icon" style="top:15%; left:15%; animation-duration: 6s;"></i>
-<i class="fas fa-receipt bg-icon" style="bottom:15%; right:5%; animation-duration: 9s;"></i>
+<i class="fas fa-calculator bg-icon" style="top:5%; left:3%; font-size: 5rem; animation-duration: 7s;"></i>
+<i class="fas fa-coins bg-icon" style="top:25%; right:4%; font-size: 4rem; animation-duration: 9s;"></i>
+<i class="fas fa-landmark bg-icon" style="bottom:10%; left:6%; font-size: 6rem; animation-duration: 8s;"></i>
+<i class="fas fa-chart-line bg-icon" style="top:50%; right:8%; font-size: 5.5rem; animation-duration: 11s;"></i>
+<i class="fas fa-piggy-bank bg-icon" style="bottom:30%; right:12%; font-size: 4.5rem; animation-duration: 7s;"></i>
+<i class="fas fa-wallet bg-icon" style="top:70%; left:2%; font-size: 4rem; animation-duration: 10s;"></i>
+<i class="fas fa-file-invoice-dollar bg-icon" style="top:15%; right:18%; font-size: 5rem; animation-duration: 12s;"></i>
+<i class="fas fa-percent bg-icon" style="bottom:50%; left:20%; font-size: 3.5rem; animation-duration: 8s;"></i>
+<i class="fas fa-balance-scale bg-icon" style="bottom:15%; right:25%; font-size: 4.5rem; animation-duration: 9s;"></i>
+<i class="fas fa-briefcase bg-icon" style="top:35%; left:12%; font-size: 3rem; animation-duration: 6s;"></i>
+<i class="fas fa-chart-pie bg-icon" style="top:60%; right:20%; font-size: 4rem; animation-duration: 10s;"></i>
+<i class="fas fa-receipt bg-icon" style="bottom:40%; right:5%; font-size: 3rem; animation-duration: 11s;"></i>
+
 
 <div id="welcome-screen">
-    <h2 style="color: white; margin-bottom: 20px;">بطاقة تعريف المحاسب الأسطوري</h2>
-    <div class="visa-card">
-        <i class="fas fa-microchip chip"></i>
-        <div class="card-number" id="v-id">ID: **** ****</div>
-        <div class="card-holder" id="v-name">اسم الطالب</div>
-        <div class="card-details">
-            <div>الفرقة: رابعة تجارة</div>
-            <div id="v-seat">رقم الجلوس: --</div>
+    <h2 style="color: white; font-size: 1.4rem; text-align: center;">بطاقة تعريف المحاسب الأسطوري</h2>
+    <div class="real-visa">
+        <div class="visa-header">
+            <div class="chip"></div>
+            <div class="visa-logo">VISA</div>
         </div>
-        <div class="visa-logo">ACCOUNTANT</div>
+        <div class="card-number-display" id="v-number">**** **** **** ****</div>
+        <div class="card-bottom">
+            <div>
+                <span class="label">اسم المحاسب</span>
+                <span class="value" id="v-name">NAME HERE</span>
+            </div>
+            <div style="text-align: center; padding: 0 10px;">
+                <span class="label">EXP</span>
+                <span class="value">06/26</span>
+            </div>
+            <div style="text-align: left;">
+                <span class="label">رقم الجلوس</span>
+                <span class="value" id="v-seat">----</span>
+            </div>
+        </div>
     </div>
-    <div class="onboarding-form">
-        <input type="text" id="in-name" placeholder="الاسم (إجباري)" oninput="updateVisa()">
-        <input type="text" id="in-seat" placeholder="رقم الجلوس" oninput="updateVisa()">
-        <input type="text" id="in-id" placeholder="ID الكلية" oninput="updateVisa()">
-        <input type="email" id="in-mail" placeholder="الإيميل الجامعي">
-        <button class="btn-start" onclick="saveUser()">استلام البطاقة والدخول 🚀</button>
+    <div style="width: 100%; max-width: 320px;" id="login-form">
+        <input type="text" id="in-name" placeholder="اكتب اسمك هنا (إجباري)" oninput="updateVisa()">
+        <input type="tel" id="in-seat" placeholder="رقم الجلوس (اختياري)" oninput="updateVisa()">
+        <button onclick="saveUser()" class="btn-save">تفعيل البطاقة ودخول 🚀</button>
     </div>
 </div>
 
 <nav id="main-nav" style="display:none;">
-    <div class="user-pill" onclick="editUser()">
-        <i class="fas fa-user-circle"></i> <span id="nav-user-name">المحاسب</span>
-    </div>
+    <div style="font-weight: 900; color: var(--gold); font-size: 0.9rem;">بوابة التخرج</div>
     <div class="nav-links">
         <button id="btn-table" class="active" onclick="showPage('table-page')">الجدول</button>
-        <button id="btn-notes" onclick="showPage('notes-page')">منطقة المذاكرة</button>
-        <div class="theme-toggle" onclick="toggleTheme()">
-            <i class="fas fa-moon" id="theme-icon"></i>
+        <button id="btn-notes" onclick="showPage('notes-page')">المذاكرة</button>
+        <button id="btn-settings" onclick="showPage('settings-page')"><i class="fas fa-cog"></i></button>
+        <div class="theme-toggle" onclick="toggleTheme()" style="cursor: pointer; padding: 0 5px;">
+            <i class="fas fa-moon" id="theme-icon" style="color: var(--gold);"></i>
         </div>
     </div>
 </nav>
 
-<div id="table-page" class="page">
-    <header><h1>المحطة الأخيرة 🎓</h1><p style="font-weight:bold;">"تعب اليوم هو راحة الغد.. استمر!"</p></header>
+<div id="table-page" class="page active">
+    <h2 style="text-align: center; font-size: 1.3rem;">جدول الفرقة الرابعة 🎓</h2>
     <div class="table-container">
         <table>
-            <thead><tr><th>المادة</th><th>التاريخ</th><th>العد التنازلي</th></tr></thead>
+            <thead><tr><th>المادة</th><th>اليوم</th><th>التاريخ</th><th>العد التنازلي</th></tr></thead>
             <tbody id="table-body"></tbody>
         </table>
     </div>
 </div>
 
 <div id="notes-page" class="page">
-    <header><h1>منطقة المذاكرة والمراجعة 📁</h1></header>
-    <div style="max-width: 900px; margin: auto;" id="notes-content"></div>
+    <h2 style="text-align: center; font-size: 1.3rem;">إدارة المذاكرة 📁</h2>
+    <div id="notes-content"></div>
+</div>
+
+<div id="settings-page" class="page">
+    <h2 style="text-align: center; font-size: 1.3rem;">الإعدادات ⚙️</h2>
+    <div class="settings-box">
+        <label style="font-size: 0.8rem; font-weight: bold;">تعديل الاسم:</label>
+        <input type="text" id="edit-name">
+        <label style="font-size: 0.8rem; font-weight: bold;">تعديل رقم الجلوس:</label>
+        <input type="tel" id="edit-seat">
+        <button class="btn-save" onclick="updateSettings()">حفظ التعديلات ✅</button>
+        <p style="font-size: 0.7rem; color: gray; margin-top: 10px; text-align: center;">بياناتك محفوظة محلياً على جهازك فقط.</p>
+    </div>
 </div>
 
 <script>
     const exams = [
-        { id: 0, name: "Audit (المراجعة)", date: "2026-05-09T10:00:00", icon: "fa-search-dollar", dLink: "https://drive.google.com/drive/folders/12TnfxTiWxdYy9sehx0BNexHYMn3yKYs5" },
-        { id: 1, name: "Advanced Cost (التكاليف)", date: "2026-05-12T10:00:00", icon: "fa-calculator", dLink: "https://drive.google.com/drive/folders/1bTy1k7XZK-PyJ9K0RMYZTkwPd81bUukT" },
-        { id: 2, name: "Budgets (الموازنات)", date: "2026-05-16T10:00:00", icon: "fa-chart-pie", dLink: "https://drive.google.com/drive/folders/1PHi4z7DH8kMGQssSVG9qH4ttDHMqN1g1" },
-        { id: 3, name: "Institution (المؤسسات)", date: "2026-05-19T10:00:00", icon: "fa-university", dLink: "https://drive.google.com/drive/folders/1aOW1sWPPNOhOC3zSq8NpyUXfpBO_sR2n" },
-        { id: 4, name: "دراسة بلغة", date: "2026-05-23T10:00:00", icon: "fa-language", dLink: "#" },
-        { id: 5, name: "Int. Accounting (الدولية)", date: "2026-06-02T10:00:00", icon: "fa-globe", dLink: "https://drive.google.com/drive/folders/1XpZP_08RmP-6xSfVQtPF5rBsYnyxnGcv" }
+        { id: 0, name: "المراجعة وحوكمة الشركات (Auditing)", day: "السبت", date: "2026-05-09T10:00:00", dLink: "https://drive.google.com/drive/folders/12TnfxTiWxdYy9sehx0BNexHYMn3yKYs5" },
+        { id: 1, name: "محاسبة التكاليف الفعلية (Cost Accounting)", day: "الثلاثاء", date: "2026-05-12T10:00:00", dLink: "https://drive.google.com/drive/folders/1bTy1k7XZK-PyJ9K0RMYZTkwPd81bUukT" },
+        { id: 2, name: "الموازنات التخطيطية (Planning Budgets)", day: "السبت", date: "2026-05-16T10:00:00", dLink: "https://drive.google.com/drive/folders/1PHi4z7DH8kMGQssSVG9qH4ttDHMqN1g1" },
+        { id: 3, name: "محاسبة المؤسسات المالية (Financial Inst.)", day: "الثلاثاء", date: "2026-05-19T10:00:00", dLink: "https://drive.google.com/drive/folders/1aOW1sWPPNOhOC3zSq8NpyUXfpBO_sR2n" },
+        { id: 4, name: "المصطلحات المحاسبية بلغة (Accounting Language)", day: "السبت", date: "2026-05-23T10:00:00", dLink: "#" },
+        { id: 5, name: "المحاسبة الدولية (International Accounting)", day: "الثلاثاء", date: "2026-06-02T10:00:00", dLink: "https://drive.google.com/drive/folders/1XpZP_08RmP-6xSfVQtPF5rBsYnyxnGcv" }
     ];
 
-    let userData = JSON.parse(localStorage.getItem('acc_user')) || null;
-    let userStore = JSON.parse(localStorage.getItem('acc_store_v3')) || { tasks: {}, links: {} };
+    let userData = JSON.parse(localStorage.getItem('user_acc_v8')) || null;
+    let userStore = JSON.parse(localStorage.getItem('store_acc_v8')) || { tasks: {}, links: {} };
 
     function updateVisa() {
-        document.getElementById('v-name').innerText = document.getElementById('in-name').value || "اسم الطالب";
-        document.getElementById('v-seat').innerText = "رقم الجلوس: " + (document.getElementById('in-seat').value || "--");
-        document.getElementById('v-id').innerText = "ID: " + (document.getElementById('in-id').value || "**** ****");
+        const nameVal = document.getElementById('in-name').value;
+        const seatVal = document.getElementById('in-seat').value;
+        document.getElementById('v-name').innerText = nameVal.toUpperCase() || "NAME HERE";
+        document.getElementById('v-seat').innerText = seatVal || "----";
+        document.getElementById('v-number').innerText = "4242 8888 " + (seatVal.padStart(4, '0')) + " 2026";
     }
 
     function saveUser() {
         const name = document.getElementById('in-name').value;
-        if(!name) { alert("اكتب اسمك عشان الكارت يكمل!"); return; }
-        userData = { name, seat: document.getElementById('in-seat').value, id: document.getElementById('in-id').value };
-        localStorage.setItem('acc_user', JSON.stringify(userData));
+        const seat = document.getElementById('in-seat').value;
+        if(!name) return alert("من فضلك اكتب اسمك ليتم إصداره على البطاقة");
+        userData = { name, seat };
+        localStorage.setItem('user_acc_v8', JSON.stringify(userData));
         initApp();
     }
 
+    function updateSettings() {
+        const n = document.getElementById('edit-name').value;
+        const s = document.getElementById('edit-seat').value;
+        if(!n) return alert("الاسم مطلوب");
+        userData.name = n; userData.seat = s;
+        localStorage.setItem('user_acc_v8', JSON.stringify(userData));
+        alert("تم التحديث!"); location.reload();
+    }
+
     function initApp() {
+        if(!userData) return;
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('main-nav').style.display = 'flex';
-        document.getElementById('nav-user-name').innerText = userData.name;
+        // تحديث بيانات الفيزا كارد داخل البروفايل (إن وجدت مستقبلاً)
         showPage('table-page');
         setInterval(updateTable, 1000);
         updateTable();
     }
 
-    function editUser() { if(confirm("تعديل بيانات الكارت؟")) { localStorage.removeItem('acc_user'); location.reload(); } }
-
-    function toggleTheme() {
-        const body = document.body;
-        const isDark = body.getAttribute('data-theme') === 'dark';
-        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        document.getElementById('theme-icon').classList.replace(isDark ? 'fa-sun' : 'fa-moon', isDark ? 'fa-moon' : 'fa-sun');
+    function showPage(p) {
+        document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(p).classList.add('active');
+        const btnId = 'btn-' + p.split('-')[0];
+        if(document.getElementById(btnId)) document.getElementById(btnId).classList.add('active');
+        if(p === 'notes-page') renderNotes();
+        if(p === 'settings-page') {
+            document.getElementById('edit-name').value = userData.name;
+            document.getElementById('edit-seat').value = userData.seat;
+        }
     }
 
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        document.getElementById(pageId === 'table-page' ? 'btn-table' : 'btn-notes').classList.add('active');
-        if(pageId === 'notes-page') renderNotes();
+    function toggleTheme() {
+        const b = document.body;
+        const isDark = b.getAttribute('data-theme') === 'dark';
+        b.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('theme-icon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
     }
 
     function updateTable() {
         const tbody = document.getElementById('table-body');
         if(!tbody) return;
         tbody.innerHTML = '';
-        exams.forEach(exam => {
-            const diff = new Date(exam.date).getTime() - new Date().getTime();
-            let timer = "انتهى ✅";
+        exams.forEach(ex => {
+            const diff = new Date(ex.date) - new Date();
+            let timer = "تم ✅";
             if(diff > 0) {
-                const d = Math.floor(diff / (1000*60*60*24));
-                const h = String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
-                const m = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
-                const s = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
+                const d = Math.floor(diff / 86400000);
+                const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+                const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+                const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
                 timer = `${d}ي ${h}:${m}:${s}`;
             }
-            tbody.innerHTML += `<tr>
-                <td style="font-weight:900"><i class="fas ${exam.icon}" style="color:var(--gold)"></i> ${exam.name}</td>
-                <td style="font-size:0.85rem; font-weight:bold;">${new Date(exam.date).toLocaleDateString('ar-EG', {day:'numeric', month:'numeric', weekday:'short'})}</td>
-                <td><div class="timer-box">${timer}</div></td>
-            </tr>`;
+            tbody.innerHTML += `<tr><td style="text-align:right; font-weight:bold;">${ex.name}</td><td>${ex.day}</td><td>${new Date(ex.date).toLocaleDateString('ar-EG')}</td><td><div class="timer-box">${timer}</div></td></tr>`;
         });
     }
 
     function renderNotes() {
-        const container = document.getElementById('notes-content');
-        container.innerHTML = '';
-        exams.forEach(exam => {
-            const tasks = userStore.tasks[exam.id] || [];
-            const myLinks = userStore.links[exam.id] || [];
-            container.innerHTML += `
-                <div class="note-card">
-                    <h3>${exam.name}</h3>
-                    <div class="study-grid">
-                        <div class="box">
-                            <h4>✅ التخطيط (Tasks)</h4>
+        const cont = document.getElementById('notes-content');
+        cont.innerHTML = '';
+        exams.forEach(ex => {
+            const tasks = userStore.tasks[ex.id] || [];
+            const links = userStore.links[ex.id] || [];
+            cont.innerHTML += `
+                <div style="background:var(--card-bg); padding:15px; border-radius:15px; margin-bottom:20px; border-right:6px solid var(--gold); box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                    <h3 style="font-size:1rem; margin-bottom:15px;">${ex.name}</h3>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
+                        <div style="background:var(--bg); padding:12px; border-radius:10px;">
+                            <h4 style="color:var(--gold); font-size:0.9rem; margin-top:0;">✅ المهام</h4>
                             <div style="display:flex; gap:5px; margin-bottom:10px;">
-                                <input type="text" id="t-in-${exam.id}" style="flex:1; padding:8px; border-radius:5px; border:1px solid #ccc;" placeholder="مثلاً: شابتر 1">
-                                <button onclick="addT(${exam.id})" class="btn-action" style="width:auto; margin:0">+</button>
+                                <input type="text" id="t-in-${ex.id}" style="margin:0; padding:8px;" placeholder="أضف مهمة">
+                                <button onclick="addT(${ex.id})" style="width:40px;">+</button>
                             </div>
-                            <div id="t-list-${exam.id}">
-                                ${tasks.map((t,i)=>`<div class="todo-item ${t.done?'completed':''}" onclick="toggleT(${exam.id},${i})"><span>${t.done?'✅':'⭕'} ${t.text}</span></div>`).join('')}
-                            </div>
+                            ${tasks.map((t,i)=>`<div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:5px 0;"><span onclick="toggleT(${ex.id},${i})" style="cursor:pointer; ${t.done?'text-decoration:line-through;opacity:0.5':''}">${t.done?'✅':'⭕'} ${t.text}</span><i class="fas fa-trash" style="color:var(--danger); cursor:pointer;" onclick="delT(${ex.id},${i})"></i></div>`).join('')}
                         </div>
-                        <div class="box">
-                            <h4>🔗 المصادر</h4>
-                            <a href="${exam.dLink}" target="_blank" class="drive-btn">مجلد الدفعة 📂</a>
-                            <div style="border-top:1px solid #ccc; padding-top:10px;">
-                                <input type="text" id="l-in-${exam.id}" style="width:90%; padding:5px; margin-bottom:5px;" placeholder="اسم مذكرتك">
-                                <input type="text" id="u-in-${exam.id}" style="width:90%; padding:5px; margin-bottom:5px;" placeholder="الرابط">
-                                <button onclick="addL(${exam.id})" class="btn-action">حفظ لينك خاص</button>
-                            </div>
-                            <div style="margin-top:10px;">
-                                ${myLinks.map(l=>`<div><a href="${l.url}" target="_blank" style="color:var(--success); font-size:0.8rem;">• ${l.name}</a></div>`).join('')}
-                            </div>
+                        <div style="background:var(--bg); padding:12px; border-radius:10px;">
+                            <h4 style="color:var(--gold); font-size:0.9rem; margin-top:0;">🔗 المصادر</h4>
+                            <a href="${ex.dLink}" target="_blank" style="background:var(--success); color:white; text-align:center; display:block; padding:8px; border-radius:8px; text-decoration:none; margin-bottom:10px; font-size:0.85rem;">درايف الدفعة 📂</a>
+                            <input type="text" id="l-name-${ex.id}" placeholder="اسم المذكرة" style="padding:6px; font-size:0.8rem;">
+                            <input type="text" id="l-url-${ex.id}" placeholder="الرابط" style="padding:6px; font-size:0.8rem;">
+                            <button onclick="addL(${ex.id})" style="width:100%; padding:8px; background:var(--gold); border:none; border-radius:8px; font-weight:bold; font-size:0.85rem;">حفظ لينك</button>
+                            ${links.map((l,i)=>`<div style="display:flex; justify-content:space-between; padding:5px 0;"><a href="${l.url}" target="_blank" style="color:var(--success); font-size:0.8rem; overflow:hidden; text-overflow:ellipsis;">• ${l.name}</a><i class="fas fa-trash" style="color:var(--danger); cursor:pointer;" onclick="delL(${ex.id},${i})"></i></div>`).join('')}
                         </div>
                     </div>
                 </div>`;
         });
     }
 
-    window.addT = (id) => { 
-        const val = document.getElementById(`t-in-${id}`).value; if(!val) return;
-        if(!userStore.tasks[id]) userStore.tasks[id] = [];
-        userStore.tasks[id].push({text: val, done: false}); save();
-    };
+    window.addT = (id) => { const v = document.getElementById('t-in-'+id).value; if(!v) return; if(!userStore.tasks[id]) userStore.tasks[id]=[]; userStore.tasks[id].push({text:v, done:false}); save(); };
+    window.delT = (id, i) => { userStore.tasks[id].splice(i,1); save(); };
     window.toggleT = (id, i) => { userStore.tasks[id][i].done = !userStore.tasks[id][i].done; save(); };
-    window.addL = (id) => {
-        const name = document.getElementById(`l-in-${id}`).value; const url = document.getElementById(`u-in-${id}`).value;
-        if(!name || !url) return; if(!userStore.links[id]) userStore.links[id] = [];
-        userStore.links[id].push({name, url}); save();
-    };
-    function save() { localStorage.setItem('acc_store_v3', JSON.stringify(userStore)); renderNotes(); }
+    window.addL = (id) => { const n = document.getElementById('l-name-'+id).value; const u = document.getElementById('l-url-'+id).value; if(!n || !u) return; if(!userStore.links[id]) userStore.links[id]=[]; userStore.links[id].push({name:n, url:u}); save(); };
+    window.delL = (id, i) => { userStore.links[id].splice(i,1); save(); };
+    function save() { localStorage.setItem('store_acc_v8', JSON.stringify(userStore)); renderNotes(); }
 
-    if(userData) initApp();
+    if(userData) {
+        initApp();
+    }
 </script>
 </body>
 </html>
